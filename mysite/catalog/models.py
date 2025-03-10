@@ -4,6 +4,7 @@ from django.db.models import UniqueConstraint # Constrains fields to unique valu
 from django.db.models.functions import Lower # Returns lower cased value of field
 import uuid # Required for unique book instances
 
+#test
 class MyModelName(models.Model):
 
     my_field_name = models.CharField(max_length=20, help_text='Enter field documentation')
