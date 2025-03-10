@@ -62,6 +62,12 @@ class Book(models.Model):
     genre = models.ManyToManyField(
         Genre, help_text="Select a genre for this book")
 
+    def display_genre(self):
+        """Create a string for the Genre. This is required to display genre in Admin."""
+        return ', '.join(genre.name for genre in self.genre.all()[:3])
+
+    display_genre.short_description = 'Genre'
+
     def __str__(self):
         return self.title
 
@@ -116,16 +122,3 @@ class Author(models.Model):
     def __str__(self):
         return f'{self.last_name}, {self.first_name}'
 
-
-class Language(models.Model):
-    #own class (print by me)
-    language = models.CharField(max_length=100)
-
-    class Meta:
-        ordering = ['language']
-
-    def get_absolute_url(self):
-        return reverse('language-write', args=[str(self.id)])
-
-    def __str__(self):
-        return self.name
