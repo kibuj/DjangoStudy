@@ -1,5 +1,16 @@
 from django.shortcuts import render
 from .models import Book, Author, BookInstance, Genre
+from django.views import generic
+from django.shortcuts import get_object_or_404
+
+class BookListView(generic.ListView):
+    model = Book
+    context_object_name = 'book_list'
+    queryset = Book.objects.all()
+    template_name = 'catalog/book_list.html'
+
+class BookDetailView(generic.DetailView):
+    model = Book
 
 def index(request):
 
