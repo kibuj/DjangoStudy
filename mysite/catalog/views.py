@@ -12,6 +12,16 @@ class BookListView(generic.ListView):
 class BookDetailView(generic.DetailView):
     model = Book
 
+class AuthorListView(generic.ListView):
+    model = Author
+    paginate_by = 2
+    context_object_name = 'author_list'
+    queryset = Author.objects.all()
+    template_name = 'catalog/author_list.html'
+
+class AuthorDetailView(generic.DetailView):
+    model = Author
+
 def index(request):
 
     # Generate counts of some of the main objects
