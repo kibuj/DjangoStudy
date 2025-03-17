@@ -12,6 +12,9 @@ class BookListView(generic.ListView):
 class BookDetailView(generic.DetailView):
     model = Book
 
+class BookListView(generic.ListView):
+    model = Book
+
 def index(request):
 
     # Generate counts of some of the main objects
