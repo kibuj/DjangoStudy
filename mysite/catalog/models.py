@@ -3,6 +3,10 @@ from django.urls import reverse
 from django.db.models import UniqueConstraint # Constrains fields to unique values
 from django.db.models.functions import Lower # Returns lower cased value of field
 import uuid # Required for unique book instances
+from django.conf import settings
+from datetime import date
+
+
 
 #test
 class MyModelName(models.Model):
@@ -78,6 +82,8 @@ class Book(models.Model):
 
 class BookInstance(models.Model):
 
+    borrower = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+
     """Model representing a specific copy of a book (i.e. that can be borrowed from the library)."""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4,
                           help_text="Unique ID for this particular book across whole library")
@@ -99,6 +105,11 @@ class BookInstance(models.Model):
         default='m',
         help_text='Book availability',
     )
+
+    @property
+    def is_overdue(self):
+        """Determines if the book is overdue based on due date and current date."""
+        return bool(self.due_back and date.today() > self.due_back)
 
     class Meta:
         ordering = ['due_back']
