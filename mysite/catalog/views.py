@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic
+from django.contrib.auth.decorators import login_required
+
 
 class BookListView(generic.ListView):
     model = Book
@@ -9,8 +11,10 @@ class BookListView(generic.ListView):
     queryset = Book.objects.all()
     template_name = 'catalog/book_list.html'
 
+
 class BookDetailView(generic.DetailView):
     model = Book
+
 
 class AuthorListView(generic.ListView):
     model = Author
@@ -22,6 +26,7 @@ class AuthorListView(generic.ListView):
 class AuthorDetailView(generic.DetailView):
     model = Author
 
+@login_required
 def index(request):
 
     # Generate counts of some of the main objects
